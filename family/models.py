@@ -6,6 +6,7 @@ from django.utils.translation import gettext_lazy as _
 class TimeStampedModel(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now_add=True)
+    hidden = models.BooleanField(default=False)
 
     class Meta:
         abstract = True
@@ -70,11 +71,24 @@ class Father(TimeStampedModel):
         return self.user.full_name
 
 
+class Wife(TimeStampedModel):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, default=False, related_name='user_wife')
+    father = models.ForeignKey(Father, on_delete=models.CASCADE, default=False, related_name='father_wife')
+    mather = models.ForeignKey(Mather, on_delete=models.CASCADE, default=False, related_name='mather_wife')
+
+
+class Husband(TimeStampedModel):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, default=False, related_name='user_husband')
+    father = models.ForeignKey(Father, on_delete=models.CASCADE, default=False, related_name='father_husband')
+    mather = models.ForeignKey(Mather, on_delete=models.CASCADE, default=False, related_name='mather_husband')
+
+
 class Person(TimeStampedModel):
     class Gender(models.TextChoices):
         Male = "male", _("male")
         Female = "female", _("female")
         Other = "other", _("other")
+
     user = models.OneToOneField(
         User, default=False, on_delete=models.CASCADE, related_name='person_user')
     father = models.ForeignKey(
@@ -83,3 +97,5 @@ class Person(TimeStampedModel):
         Mather, on_delete=models.CASCADE, related_name='mather_person')
     gender = models.CharField(
         verbose_name=_('gender'), choices=Gender.choices, default=Gender.Other, max_length=50)
+    wife = models.OneToOneField(Wife, on_delete=models.CASCADE, default=False, related_name='person_wife')
+    husband = models.OneToOneField(Husband, on_delete=models.CASCADE, default=False, related_name='person_husband')
