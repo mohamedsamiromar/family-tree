@@ -14,21 +14,21 @@ class PersonService:
             wife: int = None,
             husband: int = None
     ) -> Person:
-        # get_father = queries.get_father(father=father)
-        # get_mather = queries.get_mather(mather=mather)
+        get_father = queries.get_father(father=father)
+        get_mather = queries.get_mather(mather=mather)
 
         person = Person(
             user=user,
-            father=father,
-            mather=mather,
+            father=get_father,
+            mather=get_mather,
             gender=gender
         )
 
         if wife:
-            # get_wife = queries.get_wife(wife=wife)
-            person.wife = wife
+            get_wife = queries.get_wife(wife=wife)
+            person.wife = get_wife
         if husband:
-            # get_husband = queries.get_husband(husband=husband)
-            person.husband = husband
+            get_husband = queries.get_husband(husband=husband)
+            person.husband = get_husband
         person.save()
         return person

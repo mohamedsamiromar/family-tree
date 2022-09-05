@@ -11,7 +11,7 @@ class PersonView(viewsets.ViewSet):
     permissions = [permissions.IsAuthenticated]
 
     def create(self, request):
-        user = queries.get_user(user=1)
+        user = queries.get_user(user=request.user.id)
         serializer = CreatePersonSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         instance = PersonService.create_person(
