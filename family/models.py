@@ -4,13 +4,12 @@ from django.utils.translation import gettext_lazy as _
 
 
 class TimeStampedModel(models.Model):
-    created = models.DateTimeField(auto_now_add=True)
-    modified = models.DateTimeField(auto_now_add=True)
-    hidden = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    modified_at = models.DateTimeField(auto_now=True, null=True, blank=True)
+    hidden = models.BooleanField(default=False, null=True, blank=True)
 
     class Meta:
         abstract = True
-        ordering = ['-created', '-modified']
 
 
 class GreatGrandFather(TimeStampedModel):

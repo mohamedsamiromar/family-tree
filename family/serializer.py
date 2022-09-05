@@ -5,57 +5,53 @@ from customuser.models import User
 
 
 class CreatePersonSerializer(serializers.Serializer):
-    username = serializers.CharField(write_only=True)
-    email = serializers.EmailField(write_only=True)
-    first_name = serializers.CharField(write_only=True)
-    last_name = serializers.CharField(write_only=True)
-    birth_day = serializers.DateField(write_only=True)
-    father = serializers.IntegerField(write_only=True)
-    mather = serializers.IntegerField(write_only=True)
-    gender = serializers.CharField()
-    wife = serializers.IntegerField(required=False, allow_null=False)
-    husband = serializers.IntegerField(required=False, allow_null=False)
+    father = serializers.IntegerField(write_only=True, required=True)
+    mather = serializers.IntegerField(write_only=True, required=True)
+    gender = serializers.CharField(write_only=True, required=True)
+    wife = serializers.IntegerField(
+        write_only=True, required=False, allow_null=True)
+    husband = serializers.IntegerField(
+        write_only=True, allow_null=True
+    )
 
 
-class UserSerializer(serializers.ModelSerializer):
-    full_name = serializers.CharField(source='full_name')
-
-    class Meta:
-        model = User
-        fields = [
-            'full_name',
-            'email',
-            'birth_date',
-        ]
-
-
-class GrandMatherSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = GrandMother
-        fields = []
-
-
-class GrandFatherSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = GrandFather
-        fields = 1
-
-
-class ListPersonRelativesSerializer(serializers.ModelSerializer):
+class PersonSerializer(serializers.ModelSerializer):
+    # Father Serializer
     class FatherSerializer(serializers.ModelSerializer):
-        user = UserSerializer()
+        full_name = serializers.SerializerMethodField()
 
         class Meta:
             model = Father
-            fields = [
-                'user'
-            ]
+            fields = ["full_name", "grand_father", "grand_mather"]
 
+        def get_full_name(self, obj):
+            return obj.user.full_name
+
+    # Mother Serializer
+    class MatherSerializer(serializers.ModelSerializer):
+        full_name = serializers.SerializerMethodField()
+
+        class Meta:
+            model = Mather
+            fields = ["full_name", "grand_father", "grand_mather"]
+
+        def get_full_name(self, obj):
+            return obj.user.full_name
+
+    full_name = serializers.SerializerMethodField()
     father = FatherSerializer()
+    mather = MatherSerializer()
 
     class Meta:
         model = Person
         fields = [
-            'user',
-            'father'
+            "full_name",
+            "father",
+            "mather",
+            "gender",
+            "wife",
+            "husband"
         ]
+
+    def get_full_name(self, obj):
+        return obj.user.full_name
