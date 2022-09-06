@@ -4,15 +4,25 @@ from .models import Person, Father, Mather, GrandFather, GrandMother, \
 from customuser.models import User
 
 
+class UserInformationSerializer(serializers.Serializer):
+    first_name = serializers.CharField(write_only=True)
+    middle_name = serializers.CharField(write_only=True)
+    last_name = serializers.CharField(write_only=True)
+
+
 class CreatePersonSerializer(serializers.Serializer):
-    father = serializers.IntegerField(write_only=True, required=True)
-    mather = serializers.IntegerField(write_only=True, required=True)
-    gender = serializers.CharField(write_only=True, required=True)
-    wife = serializers.IntegerField(
+    great_grand_father_for_father = UserInformationSerializer(required=True)
+    great_grand_mather_for_father = UserInformationSerializer(required=True)
+    great_grand_father_for_mather = UserInformationSerializer(required=True)
+    great_grand_mather_for_mather = UserInformationSerializer(required=True)
+    grand_father = UserInformationSerializer(required=True)
+    grand_mather = UserInformationSerializer(required=True)
+    father = UserInformationSerializer(required=True)
+    mather = UserInformationSerializer(required=True)
+    wife = UserInformationSerializer(required=False, allow_null=True)
+    husband = UserInformationSerializer(required=False, allow_null=True)
+    gender = serializers.CharField(
         write_only=True, required=False, allow_null=True)
-    husband = serializers.IntegerField(
-        write_only=True, allow_null=True
-    )
 
 
 class PersonSerializer(serializers.ModelSerializer):

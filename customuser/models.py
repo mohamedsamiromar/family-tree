@@ -7,6 +7,8 @@ class User(AbstractUser):
     username = models.CharField(
         verbose_name=_('username'), db_index=True, unique=True, max_length=255)
     first_name = models.CharField(verbose_name=_('first_name'), max_length=150)
+    middle_name = models.CharField(
+        verbose_name=_('middle_name'), max_length=150, default=False)
     last_name = models.CharField(verbose_name=_('last_name'), max_length=255)
     email = models.EmailField(verbose_name=_('email'), unique=True)
     birth_date = models.DateField(null=True)
