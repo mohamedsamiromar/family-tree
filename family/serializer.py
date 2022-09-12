@@ -10,13 +10,36 @@ class UserInformationSerializer(serializers.Serializer):
     last_name = serializers.CharField(write_only=True)
 
 
+class GreatGrandFatherForFatherSerializer(serializers.Serializer):
+    user_information = UserInformationSerializer()
+
+
+class GreatGrandMatherForFatherSerializer(serializers.Serializer):
+    user_information = UserInformationSerializer()
+
+
+class GrandFatherSerializer(serializers.Serializer):
+    user_information = UserInformationSerializer()
+    great_grand_father = GreatGrandFatherForFatherSerializer()
+    great_grand_mather = GreatGrandMatherForFatherSerializer()
+
+
+class GreatGrandFatherForMatherSerializer(serializers.Serializer):
+    user_information = UserInformationSerializer()
+
+
+class GreatGrandMatherForMatherSerializer(serializers.Serializer):
+    user_information = UserInformationSerializer()
+
+class GrandMatherSerializer(serializers.Serializer):
+    user_information = UserInformationSerializer()
+    great_grand_father = GreatGrandFatherForMatherSerializer()
+    great_grand_mather = GreatGrandMatherForMatherSerializer()
+
+
 class CreatePersonSerializer(serializers.Serializer):
-    great_grand_father_for_father = UserInformationSerializer(required=True)
-    great_grand_mather_for_father = UserInformationSerializer(required=True)
-    great_grand_father_for_mather = UserInformationSerializer(required=True)
-    great_grand_mather_for_mather = UserInformationSerializer(required=True)
-    grand_father = UserInformationSerializer(required=True)
-    grand_mather = UserInformationSerializer(required=True)
+    grand_father = GrandFatherSerializer(required=True)
+    grand_mather = GrandMatherSerializer(required=True)
     father = UserInformationSerializer(required=True)
     mather = UserInformationSerializer(required=True)
     wife = UserInformationSerializer(required=False, allow_null=True)

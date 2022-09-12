@@ -83,14 +83,14 @@ class Father(TimeStampedModel):
 
 
 class Wife(TimeStampedModel):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, default=False,
+    user = models.OneToOneField(UserInformation, on_delete=models.CASCADE, default=False,
                                 related_name='user_wife_information')
     father = models.ForeignKey(Father, on_delete=models.CASCADE, default=False, related_name='father_wife')
     mather = models.ForeignKey(Mather, on_delete=models.CASCADE, default=False, related_name='mather_wife')
 
 
 class Husband(TimeStampedModel):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, default=False,
+    user = models.OneToOneField(UserInformation, on_delete=models.CASCADE, default=False,
                                 related_name='user_information_husband')
     father = models.ForeignKey(Father, on_delete=models.CASCADE, default=False, related_name='father_husband')
     mather = models.ForeignKey(Mather, on_delete=models.CASCADE, default=False, related_name='mather_husband')
