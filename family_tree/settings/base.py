@@ -1,33 +1,37 @@
 from datetime import timedelta
 from pathlib import Path
+import environ
+env = environ.Env()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-SECRET_KEY = 'django-insecure-c1@)8!=axenuv@dc*=agcinuw+-$tvr%(f6s9^9p9pf^7)w+_b'
-DEBUG = True
+DEBUG = env.Bool("DJANGO_DEBUG", False)
 
-ALLOWED_HOSTS = []
+
 
 # Application definition
-
-INSTALLED_APPS = [
-    'django.contrib.admin',
+DJANGO_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.admin'
+]
 
-    # my Apps
-    'customuser',
-    'family',
-
-    # frameworks and libraries
+THIRD_PART_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'djoser',
     'drf_yasg'
-
 ]
+
+LOCAL_APPS = [
+    'customuser',
+    'family',
+]
+
+INSTALLED_APPS = DJANGO_APPS + THIRD_PART_APPS + LOCAL_APPS
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
