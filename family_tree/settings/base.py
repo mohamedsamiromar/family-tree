@@ -1,10 +1,15 @@
 from datetime import timedelta
 from pathlib import Path
 import environ
+import os
 env = environ.Env()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-DEBUG = env.Bool("DJANGO_DEBUG", False)
+DEBUG = env.bool("DJANGO_DEBUG", True)
+SECRET_KEY = os.getenv(
+    "DJANGO_KEY",
+    default="django-insecure-c1@)8!=axenuv@dc*=agcinuw+-$tvr%(f6s9^9p9pf^7)w+_b",
+)
 
 
 
@@ -22,7 +27,6 @@ DJANGO_APPS = [
 THIRD_PART_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
-    'djoser',
     'drf_yasg'
 ]
 
@@ -108,6 +112,7 @@ DATABASES = {
         'PORT': '5432'
     }
 }
+SITE_ID = 1
 ADMIN_URL = "family/admin"
 AUTH_USER_MODEL = 'customuser.User'
 # Password validation
