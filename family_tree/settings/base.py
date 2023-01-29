@@ -92,6 +92,7 @@ BATON = {
         'VIEW_ID': '12345678',
     }
 }
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
