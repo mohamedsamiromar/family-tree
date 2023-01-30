@@ -1,15 +1,7 @@
-from customuser.models import User
+from customuser.models import TimeStampedModel, User
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-
-class TimeStampedModel(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    modified_at = models.DateTimeField(auto_now=True, null=True, blank=True)
-    hidden = models.BooleanField(default=False, null=True, blank=True)
-
-    class Meta:
-        abstract = True
 
 
 class UserInformation(TimeStampedModel):
@@ -112,3 +104,6 @@ class Person(TimeStampedModel):
         verbose_name=_('gender'), choices=Gender.choices, default=Gender.Other, max_length=50)
     wife = models.OneToOneField(Wife, on_delete=models.CASCADE, default=False, related_name='person_wife')
     husband = models.OneToOneField(Husband, on_delete=models.CASCADE, default=False, related_name='person_husband')
+
+    def __str__(self) -> str:
+        return self.user.full_name

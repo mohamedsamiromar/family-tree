@@ -3,6 +3,17 @@ from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
 
 
+class TimeStampedModel(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    modified_at = models.DateTimeField(auto_now=True, null=True, blank=True)
+    created_by = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    modified_by = models.DateTimeField(auto_now=True, null=True, blank=True)
+    hidden = models.BooleanField(default=False, null=True, blank=True)
+
+    class Meta:
+        abstract = True
+
+
 class User(AbstractUser):
     username = models.CharField(
         verbose_name=_('username'), db_index=True, unique=True, max_length=255)
@@ -20,7 +31,23 @@ class User(AbstractUser):
         return self.username
 
     @property
+    def is_anonymous(self):
+        return False
+
+    @property
+    def is_authenticated(self):
+        return False
+
+    @property
     def full_name(self):
         return f"{self.first_name.title()} {self.last_name.title()}"
+
+
+
+class LoginLog(TimeStampedModel):
+    username = models.CharField(max_length=11)
+
+    def __str__(self):
+        return '{} Logged in at {}'.format(self.username, self.created_at)
 
 
