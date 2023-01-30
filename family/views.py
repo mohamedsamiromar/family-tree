@@ -1,5 +1,5 @@
 from rest_framework import viewsets
-from rest_framework import permissions
+from rest_framework.permissions import AllowAny
 from family import queries
 from family.serializer import CreatePersonSerializer, PersonSerializer
 from family.services import PersonService
@@ -8,7 +8,7 @@ from rest_framework import status
 
 
 class PersonView(viewsets.ViewSet):
-    permissions = [permissions.IsAuthenticated]
+    permissions = [AllowAny]
 
     def create(self, request):
         user = queries.get_user(user=request.user.id)

@@ -28,7 +28,6 @@ urlpatterns = [
 
 
     path(settings.ADMIN_URL, admin.site.urls),
-   path('baton/', include('baton.urls')),
 
 
 
