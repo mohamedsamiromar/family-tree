@@ -73,7 +73,7 @@ class Father(TimeStampedModel):
     def __str__(self):
         return self.user.full_name
 
-
+    
 class Wife(TimeStampedModel):
     user = models.OneToOneField(UserInformation, on_delete=models.CASCADE, default=False,
                                 related_name='user_wife_information')
