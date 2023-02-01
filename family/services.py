@@ -69,5 +69,3 @@ class PersonService:
             gender: dict = None
     ) -> Person:
         grand_father = PersonService.create_grand_father(**grand_father)
-
-    
