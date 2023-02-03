@@ -10,62 +10,109 @@ from .models import (
     GreatGrandMother,
     Person,
     Wife,
-    Husband
+    Husband,
+    UserInformation
 )
 
 
-class PersonService:
-    @staticmethod
-    def create_user(
-        first_name: str,
-        middle_name: str,
-        last_name: str
-    ) -> User:
-        user = User(
-            first_name=first_name,
-            middle_name=middle_name,
-            last_name=last_name
+class PersonService():
+
+    def create_user_info(self, first_name: str, middle_name: str, last_name: str) -> UserInformation:
+        user = UserInformation(
+            first_name = first_name, middle_name = middle_name, last_name= last_name
         )
         user.save()
         return user
 
+    def create_great_grand_father(self, user) -> GreatGrandFather:
+        user = self.create_user_info(**user)
+        great_grand_father = GreatGrandFather(user=user).save
+        return great_grand_father
 
-    @staticmethod
-    def create_grand_father(
-        user: dict = None,
-        great_grand_father: dict = None,
-        great_grand_mather: dict = None
-    ):
-        user = PersonService.create_user(**user)
-        great_grand_father = PersonService.create_user(**great_grand_father)
-        great_grand_mather = PersonService.create_user(**great_grand_mather)
+    def create_great_grand_mather(self, user) -> GreatGrandMother:
+        user = self.create_user_info(**user)
+        great_grand_mather = GreatGrandMother(user=user).save
+        return great_grand_mather
 
-        grand_farther = GrandFather(
+    def create_grand_father(self, user: dict, great_grand_father: dict, great_grand_mather: dict) -> GrandFather:
+        user = self.create_user_info(**user)
+        great_grand_father = self.create_great_grand_father(**great_grand_father)
+        great_grand_mather = self.create_great_grand_mather(**great_grand_mather)
+        grand_father = GrandFather(
             user=user,
             great_grand_father = great_grand_father,
             great_grand_mather = great_grand_mather
-        )
-        grand_farther.save()
-        return grand_farther
+        ).save()
+        return grand_father
+
+    def create_grand_mather(self, user: dict, great_grand_father: dict, great_grand_mather: dict) -> GrandMother:
+        user = self.create_user_info(**user)
+        great_grand_father = self.create_great_grand_father(**great_grand_father)
+        great_grand_mather = self.create_great_grand_mather(**great_grand_mather)
+        grand_father = GrandMother(
+            user=user,
+            great_grand_father = great_grand_father,
+            great_grand_mather = great_grand_mather
+        ).save()
+        return grand_father
 
 
-        @staticmethod
-        def create_grand_mather(
-            
-        ):
-            pass
+    def create_father(self, user: dict, grand_father: dict, grand_mather: dict) -> Father:
+        user = self.create_user_info(**user)
+        grand_father = self.create_grand_father(**grand_father)
+        grand_mather = self.create_grand_mather(**grand_mather)
+        father = Father(
+            user=user,
+            grand_father=grand_father,
+            grand_mather=grand_mather
+        ).save()
+        return father
 
 
+    def create_mather(self, user: dict, grand_father: dict, grand_mather: dict) -> Mather:
+        user = self.create_user_info(**user)
+        grand_father = self.create_grand_father(**grand_father)
+        grand_mather = self.create_grand_mather(**grand_mather)
+        mather = Mather(
+            user=user,
+            grand_father=grand_father,
+            grand_mather=grand_mather
+        ).save()
+        return mather
 
-    @staticmethod
-    def create_person(
-            user: User,
-            grand_father: dict = None,
-            grand_mather: dict = None,
-            father: dict = None,
-            mather: dict = None,
-            wife: dict = None,
-            husband: dict = None,
-            gender: dict = None
-    ) -> Person:
-        grand_father = PersonService.create_grand_father(**grand_father)
+    def create_wife(self, user: dict, father: dict, mather: dict) -> Wife:
+        user = self.create_user_info(**user)
+        father = self.create_father(**father)
+        mather = self.create_mather(**mather)
+        wife = Wife(
+            user = user,
+            father = father,
+            mather=mather
+        ).save()
+        return wife
+
+    def create_husband(self, user: dict, father: dict, mather: dict) -> Husband:
+        user = self.create_user_info(**user)
+        father = self.create_father(**father)
+        mather = self.create_mather(**mather)
+        husband = Husband(
+            user = user,
+            father = father,
+            mather=mather
+        ).save()
+        return husband
+
+    def create_person( self, user: User, father: dict, mather: dict,  gender: str, wife: dict = None, husband: dict = None ) -> Person:
+        father = self.create_father(**father) 
+        mather = self.create_mather(**mather)
+        wife = self.create_wife(**wife)
+        husband = self.create_husband(**husband)
+        person = Person(
+            user = user,
+            father = father,
+            mather = mather,
+            wife = wife,
+            husband = husband,
+            gender = gender
+        ).save()
+        return person
