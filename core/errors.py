@@ -9,6 +9,8 @@ logger = logging.getLogger('django')
 class Error(Enum):
     DEFAULT = {"code": -000, "detail": _("Oops!. Something went wrong, please contact us")}
     INSTANCE_NOT_FOUND = {"code": 404, "detail": _("{} not found!")}
+    BLOCKED_USER = {'code': -403, 'detail': _('User is banned!')}
+    NO_ACTIVE_ACCOUNT = {'code': -500, 'detail': _('No active account found with the given credentials!')}
 
 
 class APIError(Exception):

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
+from enum import Enum
 
 
 class TimeStampedModel(models.Model):
@@ -12,6 +13,11 @@ class TimeStampedModel(models.Model):
 
     class Meta:
         abstract = True
+
+
+class GroupEnum(Enum):
+    PERSON = 'person'
+    ADMIN_GROUP = 'Admin'
 
 
 class User(AbstractUser):

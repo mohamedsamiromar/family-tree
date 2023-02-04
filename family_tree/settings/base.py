@@ -45,11 +45,13 @@ REST_FRAMEWORK = {
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=2),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
     "ROTATE_REFRESH_TOKENS": True,
     "BLACKLIST_AFTER_ROTATION": False,
-    "AUTH_HEADER_TYPES": ('Bearer', 'JWT')
+    "SIGNING_KEY": SECRET_KEY,
+    "AUTH_HEADER_TYPES": ('Bearer', 'JWT'),
 }
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -61,6 +63,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+API_VERSION = 'api/v1'
 ROOT_URLCONF = 'family_tree.urls'
 
 TEMPLATES = [

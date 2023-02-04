@@ -14,7 +14,6 @@ from .models import (
     UserInformation
 )
 
-
 class PersonService():
 
     def create_user_info(self, first_name: str, middle_name: str, last_name: str) -> UserInformation:
