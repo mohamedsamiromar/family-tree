@@ -33,5 +33,5 @@ urlpatterns = [
    path(settings.ADMIN_URL, admin.site.urls),
 
    path(f'{api}/family/', include('family.urls')),
-   path(f'{api}/family/', include('customuser.urls'))
+   path(f'{api}/account/', include('customuser.urls'))
 ]

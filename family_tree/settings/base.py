@@ -25,13 +25,13 @@ DJANGO_APPS = [
 ]
 
 THIRD_PART_APPS = [
-    'rest_framework',
+    'rest_framework', 
     'rest_framework_simplejwt'
         ]
 
 LOCAL_APPS = [
     'customuser',
-    'family',
+    'family'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PART_APPS + LOCAL_APPS
