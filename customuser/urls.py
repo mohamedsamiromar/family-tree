@@ -3,5 +3,5 @@ from .views import *
 
 
 urlpatterns = [
-    path('/person/token', PersonTokenObtainPairView.as_view(), name='person/token')
+    path('person/token', PersonTokenObtainPairView.as_view(), name='person/token')
 ]

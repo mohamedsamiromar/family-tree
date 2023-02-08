@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import User
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from . service import *
 
 
 class PersonTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -10,7 +11,7 @@ class PersonTokenObtainPairSerializer(TokenObtainPairSerializer):
         token = super().get_token(user)
         return AccountService.optain_access_token(
             user=user,
-            group=GroupEnum.CORPORATE_EMPLOYEE_GROUP,
+            group=GroupEnum.PERSON,
             token=token
         )
 
