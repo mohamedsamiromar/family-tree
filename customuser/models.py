@@ -54,6 +54,5 @@ class LoginLog(TimeStampedModel):
     email = models.EmailField(null=True)
 
     def __str__(self):
-        return '{} Logged in at {}'.format(self.username, self.created_at)
-
+        return '{} Logged in at {}'.format(self.email, self.created_at)
 
