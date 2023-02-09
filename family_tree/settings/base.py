@@ -31,7 +31,8 @@ THIRD_PART_APPS = [
 
 LOCAL_APPS = [
     'customuser',
-    'family'
+    'family',
+    'notification'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PART_APPS + LOCAL_APPS
