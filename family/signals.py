@@ -13,7 +13,7 @@ def person_email(sender, instance, created, **kwargs):
             template='family/email/welcome.html',
             title='Welcom To Family Tree',
             data=json.dumps({
-                "name": '{} {}'.format(instance.sv_first_name, instance.sv_last_name),
+                "name": '{} {}'.format(instance.user.first_name, instance.user.last_name),
                 "FAMILY_TREE_EMAIL": 'familytree@mail.com',
                 "corporate_name": instance.name
                 }),

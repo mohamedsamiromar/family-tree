@@ -5,13 +5,15 @@ from family.serializer import CreatePersonSerializer, PersonSerializer
 from family.services import PersonService
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+from . permissions import PersonPermission
 
 
 class PersonView(viewsets.ViewSet):
-    permissions = [AllowAny]
+    # permission_classes = [IsAuthenticated, PersonPermission]
 
     def create(self, request):
-        user = queries.get_user(user=1)
+        user = queries.get_user(user=request.user)
         serializer = CreatePersonSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         instance = PersonService.create_person(
