@@ -11,6 +11,7 @@ class Error(Enum):
     INSTANCE_NOT_FOUND = {"code": 404, "detail": _("{} not found!")}
     BLOCKED_USER = {'code': -403, 'detail': _('User is banned!')}
     NO_ACTIVE_ACCOUNT = {'code': -500, 'detail': _('No active account found with the given credentials!')}
+    PERSON_CREATION_FAILED = {'code': -500, 'detail': _('No active account found with the given credentials!')}
 
 
 class APIError(Exception):

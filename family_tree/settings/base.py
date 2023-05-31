@@ -2,6 +2,7 @@ from datetime import timedelta
 from pathlib import Path
 import environ
 import os
+
 env = environ.Env()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -10,8 +11,6 @@ SECRET_KEY = os.getenv(
     "DJANGO_KEY",
     default="django-insecure-c1@)8!=axenuv@dc*=agcinuw+-$tvr%(f6s9^9p9pf^7)w+_b",
 )
-
-
 
 # Application definition
 DJANGO_APPS = [
@@ -25,9 +24,9 @@ DJANGO_APPS = [
 ]
 
 THIRD_PART_APPS = [
-    'rest_framework', 
+    'rest_framework',
     'rest_framework_simplejwt'
-        ]
+]
 
 LOCAL_APPS = [
     'customuser',
@@ -36,7 +35,6 @@ LOCAL_APPS = [
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PART_APPS + LOCAL_APPS
-
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -52,7 +50,6 @@ SIMPLE_JWT = {
     "SIGNING_KEY": SECRET_KEY,
     "AUTH_HEADER_TYPES": ('Bearer', 'JWT'),
 }
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
